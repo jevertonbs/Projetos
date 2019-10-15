@@ -1,0 +1,33 @@
+#include <SoftwareSerial.h>
+ 
+#define LIGA  4
+#define DESLIGA  5  
+ 
+SoftwareSerial loraSerial(2, 3); // TX, RX
+ 
+String turnOn = "on";
+String turnOff = "off";
+ 
+ 
+void setup() {
+  pinMode(LIGA, INPUT_PULLUP);
+  pinMode(DESLIGA, INPUT_PULLUP);
+  Serial.begin(9600);
+  loraSerial.begin(9600);
+   
+}
+ 
+void loop() {
+ 
+  if(digitalRead(LIGA) == 0) {
+    loraSerial.print(turnOn);
+    while(digitalRead(LIGA) == 0);
+    delay(50);
+  }
+ 
+  if(digitalRead(DESLIGA) == 0) {
+    loraSerial.print(turnOff);
+    while(digitalRead(DESLIGA) == 0);
+    delay(50);
+  }
+}
